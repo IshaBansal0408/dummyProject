@@ -1,6 +1,3 @@
-import logging
-
-
 class MilvusSearchCLI:
     def __init__(self, embedder, data_manager, df_metadata=None):
         """

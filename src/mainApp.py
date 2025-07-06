@@ -2,9 +2,9 @@ import logging
 import glob
 import os
 
-from CSVDataInspector import CSVDataInspector
-from CSVLoaderClass import CSVDataLoader
-from DataLoaderClass import DataLoaderClass
+from dataLoaders.CSVDataInspector import CSVDataInspector
+from dataLoaders.CSVLoaderClass import CSVDataLoader
+from dataLoaders.DataLoaderClass import DataLoaderClass
 from services.Milvus.MilvusConnector import MilvusConnector
 from services.Milvus.MilvusDataManager import MilvusDataManager
 from services.Milvus.MilvusEmbedder import MilvusEmbedder

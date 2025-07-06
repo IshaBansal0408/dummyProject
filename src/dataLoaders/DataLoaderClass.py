@@ -4,7 +4,7 @@ from tkinter.filedialog import askopenfilenames
 
 import pandas as pd
 
-from HelperClass import HelperClass
+from src.services.HelperClass import HelperClass
 
 helper = HelperClass()
 
