@@ -58,7 +58,7 @@ class DataLoaderClass:
                 print(f"No sheets with valid test case ID columns found in {fname}")
 
     # TODO: Combines all converted CSV dataframes into one final dataframe.
-    def combineAllTCs(self, save_folder: str = "../data/processed/"):
+    def combineAllTCs(self, save_folder: str = "../data/processed"):
         combinedDF_list = list(self.convertedCSVFileData.values())
         if combinedDF_list:
             combinedDF = pd.concat(combinedDF_list, ignore_index=True)

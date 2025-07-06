@@ -77,3 +77,5 @@ This command creates a copy of `.env.example` and names it `.env`, allowing you 
 ```
 
 --------
+
+.\venv\Scripts\activate.bat
