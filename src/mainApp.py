@@ -114,3 +114,7 @@ def main():
 
     except Exception as e:
         logging.exception(f"Pipeline failed due to error: {e}")
+
+
+if __name__ == "__main__":
+    main()

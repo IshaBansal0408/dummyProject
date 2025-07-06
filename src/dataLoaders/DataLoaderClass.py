@@ -4,7 +4,7 @@ from tkinter.filedialog import askopenfilenames
 
 import pandas as pd  # Used for reading and manipulating Excel files.
 
-from src.services.HelperClass import HelperClass  # User Defined Class
+from services.HelperClass import HelperClass  # User Defined Class
 
 helper = HelperClass()
 
