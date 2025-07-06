@@ -1,14 +1,17 @@
 class MilvusSearchCLI:
+    # TODO: Initialize the CLI
     def __init__(self, embedder, data_manager, df_metadata=None):
         """
-        embedder: MilvusEmbedder instance
-        data_manager: MilvusDataManager instance
+        embedder: MilvusEmbedder instance - To convert text queries into vector embeddings
+        data_manager: MilvusDataManager instance - To perform the actual vector search in Milvus
         df_metadata: Pandas DataFrame with metadata and 'id' column for filtering
+                        - A DataFrame containing metadata corresponding to each vector
         """
         self.embedder = embedder
         self.data_manager = data_manager
         self.df_metadata = df_metadata
 
+    # TODO: Run a semantic search for the given prompt, then filter results based on metadata if filters are provided.
     def search_with_filter(self, prompt, top_k=5, filters=None):
         query_vector = self.embedder.encode([prompt])[0]
         results = self.data_manager.search(query_vector, top_k=top_k)
@@ -42,6 +45,7 @@ class MilvusSearchCLI:
             for i, res in enumerate(results, 1):
                 print(f"{i}. [Score: {res['score']:.4f}] {res['text']}")
 
+    # TODO: Provide a user-friendly REPL (Read-Eval-Print Loop) CLI to perform searches and filtering until the user exits.
     def interactive_cli(self):
         print("\n--- Interactive Search CLI ---")
         print("Type 'exit' or 'quit' to stop.")

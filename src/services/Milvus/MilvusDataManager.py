@@ -1,12 +1,16 @@
-from pymilvus import Collection
+from pymilvus import (
+    Collection,
+)  # Core object in Milvus representing a table of vectorized records.
 import logging
 
 
 class MilvusDataManager:
+    # TODO: Stores the Milvus connector and collection name for reuse (should already exist)
     def __init__(self, connector, collection_name):
         self.connector = connector
         self.collection_name = collection_name
 
+    # TODO: Insert a single batch of data (IDs, embeddings, text) into Milvus.
     def insert_embeddings(self, ids, embeddings, texts):
         if not (len(ids) == len(embeddings) == len(texts)):
             raise ValueError("Length mismatch among ids, embeddings, and texts.")
@@ -18,6 +22,7 @@ class MilvusDataManager:
             f"Inserted {len(ids)} vectors into collection '{self.collection_name}'."
         )
 
+    # TODO: Insert large datasets in chunks to avoid memory overload or performance drops.
     def batch_insert_embeddings(self, ids, embeddings, texts, batch_size=500):
         total = len(ids)
         for start in range(0, total, batch_size):
@@ -29,6 +34,7 @@ class MilvusDataManager:
             self.insert_embeddings(batch_ids, batch_emb, batch_texts)
         logging.info("Batch insertion completed.")
 
+    # TODO: Search the Milvus collection for top-k most similar vectors to a given embedding.
     def search(self, query_embedding, top_k=5):
         collection = Collection(self.collection_name)
         search_params = {

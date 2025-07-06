@@ -22,6 +22,7 @@ class EmbeddingDataManager:
             # Initialize MilvusDataManager if Milvus integration is desired
             self.data_manager = MilvusDataManager(self.connector, self.collection_name)
 
+    # TODO: Create embeddings for a list of descriptions using the MilvusEmbedder
     def generate_embeddings(self, texts: list, batch_size: int = 32):
         if not texts:
             raise ValueError("Empty text list provided for embedding.")
@@ -29,6 +30,7 @@ class EmbeddingDataManager:
         embeddings = self.embedder.encode(texts, batch_size=batch_size)
         return embeddings
 
+    # TODO: Save your embeddings (and corresponding texts) to disk as CSV
     def save_to_csv(self, descriptions: list, embeddings: list, filepath: str):
         if len(descriptions) != len(embeddings):
             raise ValueError("Descriptions and embeddings length mismatch.")
@@ -41,6 +43,7 @@ class EmbeddingDataManager:
         df.to_csv(filepath, index=False)
         logging.info(f"Saved {len(descriptions)} embeddings to CSV at '{filepath}'.")
 
+    # TODO: Read back a previously saved embeddings file from disk
     def load_from_csv(self, filepath: str):
         if not os.path.exists(filepath):
             raise FileNotFoundError(f"CSV file not found: {filepath}")
@@ -61,6 +64,7 @@ class EmbeddingDataManager:
         logging.info(f"Loaded {len(descriptions)} embeddings from CSV '{filepath}'.")
         return descriptions, embeddings
 
+    # TODO: Push embeddings + descriptions to Milvus using auto-generated integer IDs
     def insert_into_milvus(self, descriptions: list, embeddings: list):
         if not self.data_manager:
             raise RuntimeError(

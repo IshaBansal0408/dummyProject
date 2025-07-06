@@ -1,6 +1,6 @@
 import os
 
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt  # For plotting clean bar charts of categorical data
 import pandas as pd
 import seaborn as sns
 

@@ -1,6 +1,6 @@
-import logging
+import logging  # For tracking connection lifecycle, errors, creation steps
 
-from pymilvus import (
+from pymilvus import (  # Official Milvus Python SDK
     Collection,
     CollectionSchema,
     DataType,
@@ -19,7 +19,7 @@ class MilvusConnector:
         # ? Useful for debugging if needed
         logging.basicConfig(level=logging.INFO)
 
-    # TODO: Establish a connection to Milvus server
+    # TODO: Establish a connection to Milvus server (if not already connected)
     def connect(self):
         if not self.connected:
             try:
@@ -30,7 +30,7 @@ class MilvusConnector:
                 logging.error(f"Connection to Milvus failed: {e}")
                 raise
 
-    # TODO: Disconnect from Milvus server
+    # TODO: Disconnect from Milvus server (if already connected)
     def disconnect(self):
         if self.connected:
             try:
@@ -61,9 +61,9 @@ class MilvusConnector:
             return
 
         """ Define the structure/schema for the collection:
-        id: primary key (manual, not auto-generated)
-        embedding: the vector field
-        text: raw test case or prompt text (for reference)
+                id: primary key (manual, not auto-generated)
+                embedding: the vector field
+                text: raw test case or prompt text (for reference)
         """
         fields = [
             FieldSchema(

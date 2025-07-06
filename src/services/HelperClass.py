@@ -1,5 +1,5 @@
-import re
-from datetime import datetime
+import re  # Regular expressions to remove unwanted characters
+from datetime import datetime  # For generating timestamps
 
 
 class HelperClass:

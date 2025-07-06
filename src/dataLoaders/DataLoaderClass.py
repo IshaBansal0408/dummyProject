@@ -1,10 +1,10 @@
-import os
-from tkinter import Tk
+import os  # For path handling and folder creation
+from tkinter import Tk  # Provides the GUI to open a file dialog
 from tkinter.filedialog import askopenfilenames
 
-import pandas as pd
+import pandas as pd  # Used for reading and manipulating Excel files.
 
-from src.services.HelperClass import HelperClass
+from src.services.HelperClass import HelperClass  # User Defined Class
 
 helper = HelperClass()
 

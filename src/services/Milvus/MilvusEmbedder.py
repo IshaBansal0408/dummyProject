@@ -1,9 +1,10 @@
+# HuggingFace-based library optimized for sentence-level embeddings.
 from sentence_transformers import SentenceTransformer
 import logging
 
 
 class MilvusEmbedder:
-    # TODO: Load a sentence-transformer model
+    # TODO: Loads the SentenceTransformer model at init where Default model: all-MiniLM-L6-v2
     def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
         try:
             # ? This model gives 384-dim embeddings, good for general similarity tasks
@@ -13,7 +14,7 @@ class MilvusEmbedder:
             logging.error(f"Failed to load embedding model '{model_name}': {e}")
             raise
 
-    # TODO: Generate embeddings for a list of texts
+    # TODO: Generate vector embeddings from a list of input texts
     def encode(self, texts: list, batch_size: int = 32, normalize: bool = True):
         if not texts or not isinstance(texts, list):
             raise ValueError("Input must be a non-empty list of strings.")
