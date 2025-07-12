@@ -7,10 +7,10 @@ import os
 from dataLoaders.CSVDataInspector import CSVDataInspector
 from dataLoaders.CSVLoaderClass import CSVDataLoader
 from dataLoaders.DataLoaderClass import DataLoaderClass
-from services.Milvus.MilvusConnector import MilvusConnector
-from services.Milvus.MilvusDataManager import MilvusDataManager
-from services.Milvus.MilvusEmbedder import MilvusEmbedder
-from services.Milvus.MilvusSearchCLI import MilvusSearchCLI
+# from services.Milvus.MilvusConnector import MilvusConnector
+# from services.Milvus.MilvusDataManager import MilvusDataManager
+# from services.Milvus.MilvusEmbedder import MilvusEmbedder
+# from services.Milvus.MilvusSearchCLI import MilvusSearchCLI
 
 
 def main():
@@ -60,57 +60,57 @@ def main():
         ids = [int(i) + 1 for i in ids]
         logging.info(f"Loaded {len(ids)} valid descriptions.")
 
-        logging.info("Step 4: Connecting to Milvus...")
-        connector = MilvusConnector()
-        connector.connect()
-        logging.info("Connected to Milvus.")
+    #     logging.info("Step 4: Connecting to Milvus...")
+    #     connector = MilvusConnector()
+    #     connector.connect()
+    #     logging.info("Connected to Milvus.")
 
-        COLLECTION_NAME = "test_plan_embeddings"
-        EMBEDDING_DIM = 384
+    #     COLLECTION_NAME = "test_plan_embeddings"
+    #     EMBEDDING_DIM = 384
 
-        if not connector.has_collection(COLLECTION_NAME):
-            logging.info(f"Collection '{COLLECTION_NAME}' does not exist. Creating...")
-            connector.create_collection(COLLECTION_NAME, EMBEDDING_DIM)
-            connector.create_index(COLLECTION_NAME)
-            logging.info(f"Collection '{COLLECTION_NAME}' created and indexed.")
-        else:
-            logging.info(f"Collection '{COLLECTION_NAME}' already exists.")
+    #     if not connector.has_collection(COLLECTION_NAME):
+    #         logging.info(f"Collection '{COLLECTION_NAME}' does not exist. Creating...")
+    #         connector.create_collection(COLLECTION_NAME, EMBEDDING_DIM)
+    #         connector.create_index(COLLECTION_NAME)
+    #         logging.info(f"Collection '{COLLECTION_NAME}' created and indexed.")
+    #     else:
+    #         logging.info(f"Collection '{COLLECTION_NAME}' already exists.")
 
-        embedder = MilvusEmbedder()
-        data_manager = MilvusDataManager(connector, COLLECTION_NAME)
+    #     embedder = MilvusEmbedder()
+    #     data_manager = MilvusDataManager(connector, COLLECTION_NAME)
 
-        logging.info("Step 5: Generating and inserting embeddings in batches...")
+    #     logging.info("Step 5: Generating and inserting embeddings in batches...")
 
-        BATCH_SIZE = 16  # Use smaller batch size to prevent memory overload
-        total = len(descriptions)
+    #     BATCH_SIZE = 16  # Use smaller batch size to prevent memory overload
+    #     total = len(descriptions)
 
-        for start in range(0, total, BATCH_SIZE):
-            end = min(start + BATCH_SIZE, total)
-            batch_descriptions = descriptions[start:end]
-            batch_ids = ids[start:end]
+    #     for start in range(0, total, BATCH_SIZE):
+    #         end = min(start + BATCH_SIZE, total)
+    #         batch_descriptions = descriptions[start:end]
+    #         batch_ids = ids[start:end]
 
-            try:
-                logging.info(f"Encoding batch {start} to {end}...")
-                batch_embeddings = embedder.encode(
-                    batch_descriptions, batch_size=BATCH_SIZE
-                )
-                logging.info(f"Inserting batch {start} to {end} into Milvus...")
-                data_manager.batch_insert_embeddings(
-                    batch_ids, batch_embeddings, batch_descriptions
-                )
-                logging.info(f"Batch {start} to {end} inserted successfully.")
-            except Exception as e:
-                logging.error(f"Error processing batch {start}-{end}: {e}")
+    #         try:
+    #             logging.info(f"Encoding batch {start} to {end}...")
+    #             batch_embeddings = embedder.encode(
+    #                 batch_descriptions, batch_size=BATCH_SIZE
+    #             )
+    #             logging.info(f"Inserting batch {start} to {end} into Milvus...")
+    #             data_manager.batch_insert_embeddings(
+    #                 batch_ids, batch_embeddings, batch_descriptions
+    #             )
+    #             logging.info(f"Batch {start} to {end} inserted successfully.")
+    #         except Exception as e:
+    #             logging.error(f"Error processing batch {start}-{end}: {e}")
 
-        logging.info("All embeddings inserted.")
+    #     logging.info("All embeddings inserted.")
 
-        logging.info("Step 6: Launching interactive CLI...")
-        cli = MilvusSearchCLI(embedder, data_manager, df_metadata=df_metadata)
-        cli.interactive_cli()
+    #     logging.info("Step 6: Launching interactive CLI...")
+    #     cli = MilvusSearchCLI(embedder, data_manager, df_metadata=df_metadata)
+    #     cli.interactive_cli()
 
-        logging.info("Shutting down...")
-        connector.disconnect()
-        logging.info("Disconnected from Milvus. Pipeline finished.")
+    #     logging.info("Shutting down...")
+    #     connector.disconnect()
+    #     logging.info("Disconnected from Milvus. Pipeline finished.")
 
     except Exception as e:
         logging.exception(f"Pipeline failed due to error: {e}")
